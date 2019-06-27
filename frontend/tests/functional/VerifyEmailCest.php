@@ -7,22 +7,6 @@ use frontend\tests\FunctionalTester;
 
 class VerifyEmailCest
 {
-    /**
-     * Load fixtures before db transaction begin
-     * Called in _before()
-     * @see \Codeception\Module\Yii2::_before()
-     * @see \Codeception\Module\Yii2::loadFixtures()
-     * @return array
-     */
-    public function _fixtures()
-    {
-        return [
-            'user' => [
-                'class' => UserFixture::className(),
-                'dataFile' => codecept_data_dir() . 'user.php',
-            ],
-        ];
-    }
 
     public function checkEmptyToken(FunctionalTester $I)
     {
@@ -54,15 +38,15 @@ class VerifyEmailCest
 
     public function checkSuccessVerification(FunctionalTester $I)
     {
-        $I->amOnRoute('site/verify-email', ['token' => '4ch0qbfhvWwkcuWqjN8SWRq72SOw1KYT_1548675330']);
+        $I->amOnRoute('site/verify-email', ['token' => 'rGK6lWpg_Tmqj1kpOE4pyj5e3uWKhoHm_1561430662']);
         $I->canSee('Your email has been confirmed!');
         $I->canSee('Congratulations!', 'h1');
-        $I->see('Logout (test.test)', 'form button[type=submit]');
+        $I->see('Logout (jon@mail.com)', 'form button[type=submit]');
 
         $I->seeRecord('common\models\User', [
-           'username' => 'test.test',
-           'email' => 'test@mail.com',
+           'username' => 'jon@mail.com',
+           'email' => 'jon@mail.com',
            'status' => \common\models\User::STATUS_ACTIVE
         ]);
-    }
+    }  
 }
